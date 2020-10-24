@@ -1,0 +1,28 @@
+{
+  "name": "homework4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaranA99/111495007_CSE316_HW4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KaranA99/111495007_CSE316_HW4/issues"
+  },
+  "homepage": "https://github.com/KaranA99/111495007_CSE316_HW4#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "pug": "^3.0.0"
+  }
+}

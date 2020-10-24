@@ -1,0 +1,47 @@
+html
+    head
+        title = title
+
+    body
+    div (class="container")
+    <center> <div class = "title">Classes </div></center>
+    table(class = "table")
+        thead
+            tr
+                th course
+                th cmp
+                th SCTN
+                th DAYS
+                th START_TIME
+                th END_TIME
+                th MTG_START
+                th MTG_END
+                th DURATION
+                th INSTRUCTON
+                th BUILDING
+                th ROOM
+                th INSTRUCTION
+                th ENROLLMENT_CAP
+                th WAIT_CAP
+                th COMBINED_DESCRIPTION
+                th COMBINED_ENROLLMENT_CAP
+                th COURSE_NAME
+            each item in items
+            th course
+                td item.cmp
+                td item.SCTN
+                td item.DAYS
+                td item.START_TIME
+                td item.END_TIME
+                td item.MTG_START
+                td item.MTG_END
+                td item.DURATION
+                td item.INSTRUCTON
+                td item.BUILDING
+                td item.ROOM
+                td item.INSTRUCTION
+                td item.ENROLLMENT_CAP
+                td item.WAIT_CAP
+                td item.COMBINED_DESCRIPTION
+                td item.COMBINED_ENROLLMENT_CAP
+                td item.COURSE_NAME

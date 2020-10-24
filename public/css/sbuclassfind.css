@@ -1,0 +1,36 @@
+body{
+    background-color: #990000;
+}
+
+#logo{
+    float: left;
+    margin-top: 20px;
+    width:600px;
+    height:65px;
+}
+.container{
+    border-radius: 25px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:1000px;
+    height:2000px;
+    background-color: white;
+}
+select{
+    z-index: 1;
+    writing-mode: horizontal-tb;
+    padding:2px;
+    display: inline-block;
+}
+form{
+    display: inline-block;
+    writing-mode: horizontal-tb;
+}
+#submit{
+    display: inline-block;
+    width: 45px;
+    padding: 2px;
+    writing-mode: horizontal-tb;
+}
