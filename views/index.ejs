@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href=css/sbuclassfind.css
+</head>
+
+<body>
+<div class = "container">
+    <div class = "header">
+        <img src = "./pictures/logo.jpg" id = "logo" style="margin-left:20px;">
+    </div>
+    <div class ="searchbox" style="clear:both">
+        <form class = "selectform" method="post">
+            <label for="class" style="font-size:1.5em;font-weight:bold;margin-left:25px;">Search</label>
+            <input type="text" id="searchbar" size="40" style="margin-left:10px;">
+            <select id="searchform">
+                <option value="AllFields" selected="selected">All Fields</option>
+                <option value="Subject">Subject</option>
+                <option value="Title">Course Title</option> 
+                <option value="Instructor">Instructor</option>
+                <option value="Course">Course</option>
+            </select>
+        </form> 
+
+        <input type="submit" id="submitbutton" value="Find" onclick="filterData()">
+    </div>
+    <ul>
+        <% classes.forEach(function(value){ %>
+            <li><%= value.cmp %></li>
+        <% }); %>
+      </ul>
+</div>
+
+<script>
+        
+    async function retrieveData(value,text){
+        const params = new URLSearchParams({
+            query: value,
+            filter: text
+        })
+
+        const url = `/retrieveData?${ params.toString() }`
+        console.log(url)
+
+        fetch(url)
+        .then(response => response.text())
+        .then(console.log)
+        
+    }
+
+    filterData = () =>{
+        var value = document.getElementById("searchform").value
+        var text = document.getElementById("searchbar").value
+
+        retrieveData(value,text)
+
+    }
+    
+
+</script>
+<!-- <script>
+    var value;
+    var text;
+    setFormValue = (value,text) =>{
+        value = document.getElementById("searchForm_type").value
+        text = document.getElementById("searchbar").value
+        Response.redirect('localhost:300/cock')
+        }
+</script> -->
+
+</body>
+</html>
+    

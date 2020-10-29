@@ -10,39 +10,78 @@
         <img src = "./pictures/logo.jpg" id = "logo" style="margin-left:20px;">
     </div>
     <div class ="searchbox" style="clear:both">
-        <form>
+        <form class = "selectform" method="post">
             <label for="class" style="font-size:1.5em;font-weight:bold;margin-left:25px;">Search</label>
             <input type="text" id="searchbar" size="40" style="margin-left:10px;">
+            <select id="searchform">
+                <option value="AllFields" selected="selected">All Fields</option>
+                <option value="Subject">Subject</option>
+                <option value="Title">Course Title</option> 
+                <option value="Instructor">Instructor</option>
+                <option value="Course">Course</option>
+            </select>
         </form> 
-        <select id="searchForm_type" name="type">
-            <option value="AllFields" selected="selected">All Fields</option>
-            <option value="lccn_facet">Subject</option>
-            <option value="Title">Course Title</option> 
-            <option value="Author">Instructor</option>
-            <option value="callnumber">Course</option>
-        </select>
-        <input type="submit" name="submit" value="Find" id = "submit">
-    </div>
-</div>
-<div>
-    <script>
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // Typical actions to be performed when the document is ready:
-            console.log(xhttp.responseText);
-            var response = JSON.parse(xhttp.responseText);
-            var people = response.people;
-            var output='';
-            for (var i = 0; i < people.length; i++) {
-            output += '<li>'+people[i].name+'</li>';
-        }
-        document.getElementById('people').innerHTML = output;
-        }
-        };
+        <input type="submit" id="submitbutton" value="Find" onclick="filterData()">
 
-    </script>
+        <div class = "data"></div>
+
+    </div>
+    
 </div>
+
+<script>
+        
+    async function retrieveData(value,text){
+        var counter = 0
+        const params = new URLSearchParams({
+            query: value,
+            filter: text
+        })
+
+        const url = `/retrieveData?${ params.toString() }`
+        console.log(url)
+
+        fetch(url)
+        .then(response => {
+            return response.json()
+        }).then(data => {
+            const html = data.map(user => {
+                counter += 1
+                return `
+                <ul class = "list">
+                    <div class = "class">
+                        <span class = "counter">${counter}</span>
+                        <p class = "class_title"> ${user.Subj+user.CRS+"."+user.Sctn}</p>
+                        <p class = "class_info"> ${user.Title} <br> by ${user.Instr} <br> ${user.Cmp}: ${user.Days}  ${user.Start_Time}-${user.End_Time} <br> Room: ${user.Room} Building: ${user.Building}
+                    </div>
+                </ul>
+                `
+            }).join("")
+            document.querySelector('.data').innerHTML = html
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    filterData = () =>{
+        var value = document.getElementById("searchform").value
+        var text = document.getElementById("searchbar").value
+
+        retrieveData(value,text)
+
+    }
+    
+
+</script>
+<!-- <script>
+    var value;
+    var text;
+    setFormValue = (value,text) =>{
+        value = document.getElementById("searchForm_type").value
+        text = document.getElementById("searchbar").value
+        Response.redirect('localhost:300/cock')
+        }
+</script> -->
 
 </body>
 </html>

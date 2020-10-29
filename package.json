@@ -22,7 +22,11 @@
     "nodemon": "^2.0.6"
   },
   "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "mongodb": "^3.6.2",
+    "php": "^1.0.1",
     "pug": "^3.0.0"
   }
 }

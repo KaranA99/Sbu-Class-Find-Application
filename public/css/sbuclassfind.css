@@ -34,3 +34,17 @@ form{
     padding: 2px;
     writing-mode: horizontal-tb;
 }
+.class{
+    display: inline-block;
+}
+.counter{
+    width: 20px;
+    float:left;
+}
+.class_title{
+    width: 100px;
+    float:left;
+}
+.class_info{
+    float:left;
+}
