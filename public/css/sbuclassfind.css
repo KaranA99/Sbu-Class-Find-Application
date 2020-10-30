@@ -48,3 +48,8 @@ form{
 .class_info{
     float:left;
 }
+.add_button{
+    float:right;
+    background:lightblue;
+    text-align: right;
+}

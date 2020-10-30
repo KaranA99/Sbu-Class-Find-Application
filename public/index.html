@@ -15,10 +15,10 @@
             <input type="text" id="searchbar" size="40" style="margin-left:10px;">
             <select id="searchform">
                 <option value="AllFields" selected="selected">All Fields</option>
-                <option value="Subject">Subject</option>
-                <option value="Title">Course Title</option> 
-                <option value="Instructor">Instructor</option>
-                <option value="Course">Course</option>
+                <option value="Title">Title</option>
+                <option value="Class_Number">Class Number</option> 
+                <option value="Day">Day</option>
+                <option value="Time">Time</option>
             </select>
         </form> 
         <input type="submit" id="submitbutton" value="Find" onclick="filterData()">
@@ -37,7 +37,6 @@
             query: value,
             filter: text
         })
-
         const url = `/retrieveData?${ params.toString() }`
         console.log(url)
 
@@ -46,14 +45,17 @@
             return response.json()
         }).then(data => {
             const html = data.map(user => {
+                var course = user.Subj+user.CRS+"."+user.Sctn
+                var id = user._id
                 counter += 1
                 return `
                 <ul class = "list">
                     <div class = "class">
                         <span class = "counter">${counter}</span>
-                        <p class = "class_title"> ${user.Subj+user.CRS+"."+user.Sctn}</p>
+                        <p class = "class_title"> ${course} </p>
                         <p class = "class_info"> ${user.Title} <br> by ${user.Instr} <br> ${user.Cmp}: ${user.Days}  ${user.Start_Time}-${user.End_Time} <br> Room: ${user.Room} Building: ${user.Building}
                     </div>
+                    <p class = "add_button" onclick="addClass(`+(parseInt(user.Position))+`)">Add</p>
                 </ul>
                 `
             }).join("")
@@ -66,22 +68,25 @@
     filterData = () =>{
         var value = document.getElementById("searchform").value
         var text = document.getElementById("searchbar").value
-
         retrieveData(value,text)
 
+    }
+
+    function addClass(id){
+        window.location="/schedule"
+        const params = new URLSearchParams({
+            query: id
+        })
+
+        const url = `/schedule?${ params.toString() }`
+        console.log(url)
+
+        fetch(url)
+        
     }
     
 
 </script>
-<!-- <script>
-    var value;
-    var text;
-    setFormValue = (value,text) =>{
-        value = document.getElementById("searchForm_type").value
-        text = document.getElementById("searchbar").value
-        Response.redirect('localhost:300/cock')
-        }
-</script> -->
 
 </body>
 </html>

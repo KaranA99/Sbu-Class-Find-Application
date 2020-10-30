@@ -8,15 +8,7 @@ const url = 'mongodb://localhost:27017'
 const dbName = "homework4"
 const client = new MongoClient(url)
 
-//app.set('view engine', 'ejs')
-
 app.get('/', (req,res) => {
-    // const db = client.db(dbName)
-    // const collection = db.collection('homework4')
-    // collection.find({}).toArray(function(err,class_list){
-    //     if(err) throw err;
-    //     res.render('index', {'classes' : class_list})
-    // })
     res.sendFile('./public/index.html', {root: __dirname })
 })
 
@@ -26,39 +18,66 @@ app.get('/retrieveData', (req,res) => {
     const db = client.db(dbName)
     const collection = db.collection('homework4')
     if (query == "AllFields"){
-        collection.find({}).toArray(function(err,class_list){
+        if (filter.length == 0){
+            collection.find().toArray(function(err,class_list){
+                if(err) throw err;
+                res.json(class_list)
+            })
+        }
+        else{
+            collection.find({
+            $or: [
+                {Subj: filter},
+                {CRS: filter},
+                {Title: filter},
+                {Cmp: filter},
+                {Sctn: filter},
+                {Days: filter},
+                {Start_Time: filter},
+                {End_Time: filter},
+                {Mtg_Start_Date: filter},
+                {Mtg_End_Date: filter},
+                {Duration: filter},
+                {Instruction_Mode: filter},
+                {Building: filter},
+                {Room: filter},
+                {Instr: filter},
+                {Enrl_Cap: filter},
+                {Wait_Cap: filter},
+                {Cmbnd_Descr: filter},
+                {Cmbnd_Enrl_Cap: filter}
+            ]
+            })
+        .toArray(function(err,class_list){
             if(err) throw err;
             res.json(class_list)
-        })
+            })
+        }
     }
-    if (query == "Subject"){
+    if (query == "Title"){
         collection.find({ Subj:filter }).toArray(function(err,class_list){
             if(err) throw err;
             res.json(class_list)
         })
     }
-    if (query == "Title"){
-        filter = parseInt(filter)
+    if (query == "Class_Number"){
         collection.find({ CRS:filter }).toArray(function(err,class_list){
+            console.log(class_list)
             if(err) throw err;
             res.json(class_list)
         })
     }
-    if (query == "Instructor"){
-        collection.find({ Instr:filter }).toArray(function(err,class_list){
+    if (query == "Day"){
+        collection.find({ Days:filter }).toArray(function(err,class_list){
             if(err) throw err;
             res.json(class_list)
         })
     }
-    if (query == "Course"){
-        filter = filter.split(" ").join("")
-        course = filter[0] + filter[1] + filter[2]
-        title = filter[3] + filter[4] + filter[5]
-        title = parseInt(title)
+    if (query == "Time"){
         collection.find({
-            $and: [
-                {Subj: course},
-                {CRS: title}
+            $or: [
+                {Start_Time: filter},
+                {End_Time: filter}
             ]
         })
         .toArray(function(err,class_list){
@@ -66,6 +85,21 @@ app.get('/retrieveData', (req,res) => {
             res.json(class_list)
         })
     }
+})
+
+app.get("/schedule", (req,res) =>{
+    const db = client.db(dbName)
+    const homework4_collection = db.collection('homework4')
+    const schedule_collection = db.collection('schedule')
+    query = req.query.query
+    if (query != undefined){
+        homework4_collection.find({ Position:query }).toArray(function(err,class_list){
+            schedule_collection.insertMany(class_list, function(err, res) {
+                if (err) throw err;
+                });
+        })
+    }
+    res.sendFile("./schedule.html", {root: __dirname })
 })
 
 // Set Static Folder
