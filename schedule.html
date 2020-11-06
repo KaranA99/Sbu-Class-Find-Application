@@ -1,10 +1,67 @@
 <!DOCTYPE html>
 <html lang = "en">
-<h1>dick</h1>
+<style>
+th, td{
+    padding: 25px;
+    border: 1px solid black;
+}
+</style>
+<table class = "table">
+    <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    <tr>
+        <td class = "Monday"></td>
+        <td class = "Tuesday"></td>
+        <td class = "Wednesday"></td>
+        <td class = "Thursday"></td>
+        <td class = "Friday"></td>
+        <td class = "Saturday"></td>
+        <td class = "Sunday"></td>
+    </tr>
 
-<button onclick="goBack()">Go back to search class</button>
+
+</table>
+<button onclick="goBack()">Go Back To Class Find</button>
+<button onclick="makeTable()">Generate Schedule</button>
 
 <script>
+    async function makeTable(){
+        
+        const url = `/makeTable`
+
+        fetch(url)
+        .then(response => {
+            return response.json()
+        }).then(data => {
+            data.map(user => {
+                if (user.Days.includes("M")){
+                    document.querySelector(".Monday").innerHTML += user.Start_Time + " " + user.Subj + user.CRS + "." + user.Sctn + "<br>" + user.Title + "<br>" + "<br>"
+                }
+                if (user.Days.includes("TU")){
+                    document.querySelector(".Tuesday").innerHTML += user.Start_Time + " " + user.Subj + user.CRS + "." + user.Sctn + "<br>" + user.Title + "<br>" + "<br>"
+                }
+                if (user.Days.includes("W")){
+                    document.querySelector(".Wednesday").innerHTML += user.Start_Time + " " + user.Subj + user.CRS + "." + user.Sctn + "<br>" + user.Title + "<br>" + "<br>"
+                }
+                if (user.Days.includes("TH")){
+                    document.querySelector(".Thursday").innerHTML += user.Start_Time + " " + user.Subj + user.CRS + "." + user.Sctn + "<br>" + user.Title + "<br>" + "<br>"
+                }
+                if (user.Days.includes("F")){
+                    document.querySelector(".Friday").innerHTML += user.Start_Time + " " + user.Subj + user.CRS + "." + user.Sctn + "<br>" + user.Title + "<br>" + "<br>"
+                }
+                return 0
+            })
+        }).catch(error => {
+            console.log(error)
+    })
+}
 
     goBack = () =>{
         window.location="/"

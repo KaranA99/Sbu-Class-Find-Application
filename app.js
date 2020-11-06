@@ -95,11 +95,26 @@ app.get("/schedule", (req,res) =>{
     if (query != undefined){
         homework4_collection.find({ Position:query }).toArray(function(err,class_list){
             schedule_collection.insertMany(class_list, function(err, res) {
-                if (err) throw err;
-                });
+                if (err)
+                    if (err.name === 'BulkWriteError' && err.code === 11000) {
+                        console.log("Duplicate Insertion")
+                    }
+                    else{
+                        throw (err)
+                    }
+            })
         })
     }
     res.sendFile("./schedule.html", {root: __dirname })
+})
+
+app.get("/makeTable", (req,res) => {
+    const db = client.db(dbName)
+    const schedule_collection = db.collection('schedule')
+    schedule_collection.find({}).toArray(function(err,schedule_list){
+        if (err) throw err;
+        res.json(schedule_list)
+    })
 })
 
 // Set Static Folder

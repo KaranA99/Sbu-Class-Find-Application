@@ -15,7 +15,7 @@ body{
     margin-bottom: 0px;
     margin-left: auto;
     width:1000px;
-    height:2000px;
+    height:12500px;
     background-color: white;
 }
 select{
@@ -53,3 +53,7 @@ form{
     background:lightblue;
     text-align: right;
 }
+.pagination {
+    display: inline-block;
+  }
+  
